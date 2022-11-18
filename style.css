@@ -1,0 +1,64 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.title-game {
+    text-align: center;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 64px;
+}
+
+.btn {
+    font-size: 48px;
+    width: 96px;
+    height: 96px;
+    margin: 2px;
+    font-weight: 600;
+    color: transparent;
+    background-color: transparent;
+    border: 2px solid orange;
+    border-radius: 8px;
+}
+
+.btn:hover {
+    cursor: pointer;
+}
+
+.status-wrapper {
+    display: flex;
+    justify-content: space-between;
+    margin: 2px;
+}
+
+.x-win, .X {
+    color: green;
+}
+
+.o-win, .O {
+    color: orangered;
+}
+
+.draw{
+    color: blue;
+}
+
+.status{
+    font-size: 48px;
+}
+
+.btn-again {
+    min-width: 120px;
+}
+
+.btn-again:hover {
+    cursor: pointer;
+}
