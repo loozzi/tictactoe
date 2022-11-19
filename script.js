@@ -94,7 +94,10 @@ function handleChecked(e){
                 turn = getNextPlayer(data)
                 data = play(data, cx, cy, turn)
                 setText(cx, cy, turn)
+                if(isFinalState(data))
+                    showWinner(data)
             }
+
         } else {
             alert('Box is checked')
         }
@@ -334,7 +337,7 @@ function getScore(data){
     let bestState = []
     states.forEach(state => {
         [score, newState] = getScore(state)
-        if(turn == 1){
+        if(turn == 2){
             if(bestScore < score || bestScore == -10){
                 bestScore = score
                 bestState = state
