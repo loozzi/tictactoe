@@ -1,27 +1,29 @@
 // Tictactoe game
-// 1. AI engine
-// - state representation: array 2d
-// - checking is end game
-// - detect winner
-// - validate move
-//  + detect current player (human or machine)
-//  + calc valid move 
-// - calc status score
-//  + final state score
-//  + not-final state score
-// - calc best move for machine
-//  + check all movable state -> get best status
+/** 1. AI engine
+ *    - state representation: array 2d
+ *    - checking is end game
+ *    - detect winner
+ *    - validate move
+ *    + detect current player (human or machine)
+ *    + calc valid move 
+ *    - calc status score
+ *    + final state score
+ *    + not-final state score
+ *    - calc best move for machine
+ *    + check all movable state -> get best status
+ */
 
-// 2. User interface
-// - render user interface
-//  + table 3x3
-//  + handle when user click to a box
-//  + get coordinates user click box
-//  + convert number to X or O 
-//  + set X or O to the box (X: green, O: red)
-// - checking game is done => show winner and show button play again
-// - Play again: remove all box in table, hide winner and button play again
-// - save history
+/** 2. User interface
+ * - render user interface
+ *  + table 3x3
+ *  + handle when user click to a box
+ *  + get coordinates user click box
+ *  + convert number to X or O 
+ *  + set X or O to the box (X: green, O: red)
+ * - checking game is done => show winner and show button play again
+ * - Play again: remove all box in table, hide winner and button play again
+ * - save history
+ */
 
 let data = [
     [0, 0, 0],
@@ -54,10 +56,10 @@ function createTable(){
     app.appendChild(wrapper)
 }
 
-
-// function get coordinates box user click in table
-// Input: box
-// Output: coordinates [x, y]
+/** function get coordinates box user click in table
+ * @param {Element} e: DOM element button
+ * @return [Number, Number]: coordinates [x, y]
+ */
 function getCoordinates(e){
     const classList = e.target.classList
     let x = parseInt(classList[1][4])
@@ -65,19 +67,20 @@ function getCoordinates(e){
     return [x, y]
 }
 
-
-// function set text to box X or O 
-// Input: coordinates and turners
-// Output: rendering interface
+/** function set text to box X or O 
+ * @param {Number} x: coordinates X
+ * @param {Number} y: coordinates Y
+ * @param {Number} turn: 1 or 2: human or machine
+ */
 function setText(x, y, turn){
     const btn = document.querySelector(`.row-${x}.col-${y}`)
     btn.textContent = getChar(turn)
     btn.classList.add(getChar(turn))
 }
 
-// function handle when user checked to the box
-// Input: User clicked
-// Output: Update data in table
+/** function handle when user checked to the box
+ * @param {Element} e: DOM element button in table
+ */
 function handleChecked(e){
     if(gameIsDone === false){
         const [x, y] = getCoordinates(e)
@@ -103,9 +106,10 @@ function handleChecked(e){
 }
 
 // ======== Play =========
-// function hanlde play again
-// remove all data in table
-// remove winner
+/** function hanlde play again
+ * remove all 2D Array: data in table
+ * remove winner
+ */
 function playAgaint(){
     data = [
         [0, 0, 0],
@@ -126,12 +130,12 @@ function playAgaint(){
     app.removeChild(statusWrapper)
 }
 
-// function show winner or draw
-// Input: data in table
-// Output: Rendering interface: 
-// - winner
-// - button Play again
-
+/** function show winner or draw
+ * @param {Array} data: 2D Array: data in table
+ * render interface:
+ * - winner
+ * - button Play Again
+ */
 function showWinner(data){
     const score = getScoreFinalState(data)
     const app = document.getElementById('app')
@@ -160,9 +164,10 @@ function showWinner(data){
     gameIsDone = true
 }
 
-// convert number -> char to show interface
-// Input: 1 or 2
-// Output: X or O 
+/** convert number -> char to show interface
+ * @param {Number} turn: 1 or 2
+ * @returns Char: X or O
+ */
 function getChar(turn){
     if(turn === 1)
         return 'X'
@@ -170,9 +175,13 @@ function getChar(turn){
         return 'O'
 }
 
-// update data in state
-// Input: table, coordinates and turner
-// Output: table after update
+/** Play function
+ * @param {Array} data: 2D Array: data in table 
+ * @param {Number} x: coordinates X
+ * @param {Number} y: coordinates Y
+ * @param {Number} turn: 1 or 2 - human or machine
+ * @returns Array: table after update
+ */
 function play(data, x, y, turn){
     let dataInput = []
     data.forEach(item => {
@@ -183,10 +192,10 @@ function play(data, x, y, turn){
     return dataInput
 }
 
-
-// function get what player turn
-// Input: data in table
-// Output: 1 or 2
+/** function get player turn
+ * @param {Array} data: 2D Array: data in table 
+ * @returns Number: 1 or 2
+ */
 function getNextPlayer(data){
     let dataInput = []
     data.forEach(item => {
@@ -206,13 +215,10 @@ function getNextPlayer(data){
 }
 
 // ========== AI Engine ============
-
-// get winner or draw
-// Input: data in table
-// Output:
-// 1: X win
-// 2: O win
-// 0: draw
+/** Get winner or draw
+ * @param {Array} data: 2D Array: data in table 
+ * @returns Number: 1 - X win,  2 - O win, 0: Draw
+ */
 function getScoreFinalState(data){
     let dataInput = []
     data.forEach(item => {
@@ -245,10 +251,10 @@ function getScoreFinalState(data){
     return 0
 }
 
-
-// checking game is done?
-// Input: data in table
-// Output: true or false
+/** Game done?
+ * @param {Array} data: 2D Array: data in table 
+ * @returns Boolen: true or false
+ */
 function isFinalState(data){
     let dataInput = []
     data.forEach(item => {
@@ -286,11 +292,10 @@ function isFinalState(data){
     return true
 }
 
-
-
-// function get new status state
-// Input: data in table
-// Output: All possible states
+/** Take all possible statas
+ * @param {Array} data: 2D Array: data in table 
+ * @returns Array: 3D Array
+ */
 function getNextState(data){
     let dataInput = []
     data.forEach(item => {
@@ -310,8 +315,10 @@ function getNextState(data){
     return states
 }
 
-// Input: data in table
-// Ouput: [score, best state for machine]
+/** Get score for state
+ * @param {Array} data: 2D Array: data in table 
+ * @returns [Number, Array]: [score, best state for machine]
+ */
 function getScore(data){
     let dataInput = []
     data.forEach(item => {
@@ -343,8 +350,10 @@ function getScore(data){
     return [bestScore, bestState]
 }
 
-// Input: data in table
-// Output: coordinates of machine [x, y]
+/** Get machine coordinates
+ * @param {Array} data: 2D Array: data in table 
+ * @returns [Number, Number]: coordinates [x, y]
+ */
 function computerTurn(data){
     let dataInput = []
     data.forEach(item => {
@@ -364,5 +373,6 @@ function computerTurn(data){
     }
     return [-1, -1]
 }
+
 
 createTable()
